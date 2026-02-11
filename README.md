@@ -1,28 +1,24 @@
-# BimmerGarageSoftware
-Smart software for smarter cars.
+BimmerGarageSoftware
 
+ESP32-based real-time automotive dashboard system.
 
-ESP32 CAN DASHBOARD WITH LVGL AND ESP-NOW
+Overview
 
-Real-time automotive dashboard system based on ESP32, capable of reading CAN bus data directly from the OBD2 port and displaying it wirelessly on a TFT display using LVGL.
+Dual-ESP32 setup that reads CAN data from the OBD2 port and displays it wirelessly on a TFT screen using LVGL.
 
-The system is split into two ESP32 devices:
+CAN Sender – Reads vehicle CAN data via TWAI + CAN transceiver
 
-CAN Sender – reads CAN frames from the vehicle and sends parsed sensor data via ESP-NOW
+Display Receiver – Receives data via ESP-NOW and renders dashboard UI
 
-Display Receiver – receives data wirelessly and displays it using LVGL (bars, labels, real-time updates)
+Features
 
-FEATURES
+Direct CAN Bus reading (no ELM327)
 
-Direct CAN Bus reading (no ELM327 latency)
+ESP-NOW wireless communication
 
-Uses ESP32 TWAI (CAN) controller
+LVGL real-time dashboard
 
-Wireless communication via ESP-NOW
-
-Real-time graphical dashboard using LVGL
-
-Supported parameters:
+Live data display:
 
 Coolant temperature
 
@@ -30,109 +26,22 @@ Oil pressure
 
 Oil temperature
 
-Battery / charging level
+Battery level
 
-Fast refresh rate suitable for live driving data
+Hardware
 
-Designed for automotive 12V environments
+ESP32 (WROOM-32)
 
-SYSTEM ARCHITECTURE
-
-ESP32 CAN SENDER --> ESP-NOW --> ESP32 DISPLAY RECEIVER
-| |
-| |
-OBD2 CAN TFT DISPLAY
-|
-Vehicle CAN Bus
-
-HARDWARE REQUIREMENTS
-
-CAN SENDER:
-
-ESP32 Dev Board (WROOM-32)
-
-CAN Transceiver:
-
-SN65HVD230 (recommended, 3.3V logic)
+SN65HVD230 CAN transceiver
 
 OBD2 connector
 
-DC-DC Buck Converter (12V to 5V)
+TFT display (ST7789 240x320)
 
-Vehicle with CAN bus (OBD2)
+12V → 5V DC-DC converter
 
-DISPLAY RECEIVER:
+⚠️ Never connect ESP32 directly to CAN lines without a transceiver.
 
-ESP32 Dev Board
+Tech Stack
 
-TFT Display (ST7789 / 240x320)
-
-LVGL compatible wiring
-
-OBD2 CAN PINOUT
-
-Pin 6 - CAN High
-Pin 14 - CAN Low
-Pin 4 - Ground
-Pin 16 - +12V Battery
-
-WARNING:
-Never connect ESP32 directly to CAN lines without a CAN transceiver.
-
-POWER SUPPLY
-
-Vehicle 12V is converted using a DC-DC buck converter
-
-Output 5V powers the ESP32 via VIN or USB
-
-ESP32 internal logic runs at 3.3V
-
-CAN transceiver powered from 3.3V or 5V depending on model
-
-SOFTWARE STACK
-
-Arduino Framework
-
-ESP-NOW
-
-ESP32 TWAI (CAN driver)
-
-LVGL graphics library
-
-LovyanGFX display driver
-
-TESTING WITHOUT A VEHICLE
-
-The system can be tested without a car by sending simulated sensor data via Serial Monitor.
-
-Sender serial input format:
-coolant,oil_pressure,oil_temperature,battery
-
-Example:
-90,4,105,80
-
-DISPLAY USER INTERFACE
-
-Horizontal bar indicators
-
-Real-time value updates
-
-Custom ranges per sensor
-
-Optimized for in-car visibility
-
-FUTURE IMPROVEMENTS
-
-Vehicle-specific CAN ID decoding (BMW, Mercedes, VAG)
-
-Touch screen support
-
-Multiple dashboard pages
-
-RPM, speed, boost pressure
-
-SD card data logging
-
-Over-the-air firmware updates
-
-Persistent settings storage
+Arduino • ESP-NOW • ESP32 TWAI • LVGL • LovyanGFX
